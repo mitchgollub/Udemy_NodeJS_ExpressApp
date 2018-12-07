@@ -3,21 +3,23 @@ const hbs = require('hbs');
 
 var app = express();
 
+hbs.registerPartials(__dirname + '/views/partials');
+app.set('view engine', 'hbs');
 app.use(express.static(__dirname + '/public'));
 
-app.set('view engine', 'hbs');
+hbs.registerHelper('getCurrentYear', () => new Date().getFullYear());
+hbs.registerHelper('screamIt', (text) => text.toUpperCase());
+
 app.get('/', (req, res) => {
     res.render('home.hbs', {
         pageTitle: 'Home Page',
-        welcomeMessage: 'Welcome to this website',
-        currentYear: new Date().getFullYear()
+        welcomeMessage: 'Welcome to this website'
     });
 });
 
 app.get('/about', (req, res) => {
     res.render('about.hbs', {
-        pageTitle: 'About Page',
-        currentYear: new Date().getFullYear()
+        pageTitle: 'About Page'
     });
 })
 
